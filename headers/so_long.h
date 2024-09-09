@@ -49,3 +49,8 @@ char **ft_split(const char *s, char c);
 void init_map(const char *filename, struct t_map *map,struct t_data *data);
 void init_game(struct t_data *data, char **av, struct t_map *map);
 int count_char(char *str, char c);
+void move_up(struct t_data *data);
+void move_down(struct t_data *data);
+void move_left(struct t_data *data);
+void move_right(struct t_data *data);
+void check_win(struct t_data *data, int key);
