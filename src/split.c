@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ferda-si <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/09 18:32:17 by ferda-si          #+#    #+#             */
+/*   Updated: 2024/09/09 18:33:33 by ferda-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "so_long.h"
 
 static size_t	ft_countword(char const *s, char c)
 {
 	size_t	count;
+
 	if (!*s)
 		return (0);
 	count = 0;
@@ -45,15 +57,19 @@ char	**ft_split(char const *s, char c)
 	lst[i] = NULL;
 	return (lst);
 }
-int count_char(char *str, char c)
+
+int	count_char(char *str, char c)
 {
-   int i = 0;
-   int count = 0;
-   while (str[i])
-   {
-      if (str[i] == c)
-         count++;
-      i++;
-   }
-   return (count);
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
 }

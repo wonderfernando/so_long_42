@@ -29,11 +29,16 @@ struct t_data{
    int img_height_size;
    int jogador_pos_x;
    int jogador_pos_y;
-   void *jogador_img;
+
    int colates;
    int colated;
    int steps;
    struct t_map *map;
+   void *wall_img;
+   void *floor_img;
+   void *jogador_img;
+   void *food_img;
+   void *portal_img;
 };
 
 struct t_map{
@@ -54,3 +59,12 @@ void move_down(struct t_data *data);
 void move_left(struct t_data *data);
 void move_right(struct t_data *data);
 void check_win(struct t_data *data, int key);
+void	*load_texture(struct t_data *data, char *path_image);
+void	init_values(struct t_data *data, char **av, struct t_map *map);
+int	close_window(struct t_data *data);
+void    render(struct t_data *data, int x, int y);
+void	render_map(struct t_data *data);
+int	validate_format_name_map(char *filename);
+char get_element(struct t_data *data, int pos_y, int pos_x);
+void	get_init_position(struct t_map *map);
+void free_all(struct t_data *data);

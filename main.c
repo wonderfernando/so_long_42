@@ -1,51 +1,16 @@
 # include "so_long.h"
-
-/*
-void render(struct t_data *data)
+char get_element(struct t_data *data, int pos_y, int pos_x)
 {
-   int pos_x = 0;
-   int pos_y = 0;
-   void  *floor;
-   void  *wall;
-  // void *jogador;
-   void *java = mlx_xpm_file_to_image(data->mlx, "./textures/food.xpm", &data->img_width_size, &data->img_height_size);
-   void *gruta = mlx_xpm_file_to_image(data->mlx, "./textures/portal.xpm", &data->img_width_size, &data->img_height_size);
- 
-   floor = mlx_xpm_file_to_image(data->mlx, "./textures/floor.xpm", &data->img_width_size, &data->img_height_size);
-   wall = mlx_xpm_file_to_image(data->mlx, "./textures/wall.xpm", &data->img_width_size, &data->img_height_size);
-  // jogador = mlx_xpm_file_to_image(data->mlx, "./textures/moving_right.xpm", &data->img_width_size, &data->img_height_size);
-  
-   for(int y = 0; y <= 9; y++)
-   {
-      pos_y = y * 80;
-      for(int x = 0; x <= 9; x++)
-      {
-         pos_x = x  * 80;
- 
-         if (pos_y == 0 || pos_x == 0 || x == 9 || y == 9)
-            mlx_put_image_to_window(data->mlx, data->window, wall, pos_x, pos_y);
-         else
-            if (pos_y == 240)
-                  mlx_put_image_to_window(data->mlx, data->window, java, pos_x, pos_y);
-               else
-                  mlx_put_image_to_window(data->mlx, data->window, floor, pos_x, pos_y);
-      }
-
-   }
-   //mlx_put_image_to_window(data->mlx, data->window, data->jogador_img, data->jogador_pos_x, data->jogador_pos_y);
-   mlx_put_image_to_window(data->mlx, data->window, gruta, pos_x/2, pos_y/2);
-   mlx_put_image_to_window(data->mlx, data->window, java, pos_x/6, pos_y/2); 
-   mlx_put_image_to_window(data->mlx, data->window, data->jogador_img, data->jogador_pos_x, data->jogador_pos_y);  
-}*/
-
-
-int LEFT = 65361;
-int RIGHT = 65363;
-int UP = 65362;
-int DOWN = 65364;
+	return (data->map->map[data->map->pos_y][data->map->pos_x - 1]);
+}
 
 int key_press(int key, struct t_data *data)
 {
+   int LEFT = 65361;
+   int RIGHT = 65363;
+   int UP = 65362;
+   int DOWN = 65364;
+
    if (key == 65307) //ESC
       close_window(data);
    check_win(data, key);
@@ -75,12 +40,8 @@ int key_press(int key, struct t_data *data)
    }
    ft_printf("PASSOS: %d\n", data->steps); 
    ft_printf("COLATEDS: %d %d\n", data->colated, data->colates); 
-   render_map((struct t_data *)data);
+   render_map(data);
 }
-
-
-
-
 
 int main(int ac, char **av)
 {
@@ -100,9 +61,11 @@ int main(int ac, char **av)
          ft_printf("ERROR: MAPA NÃO ENCONTRADO!\n");
          return (1);
       }
-      init_game(&data, av, &map);
+      close(fd);
+      init_values(&data, av, &map);
       render_map(&data);
       get_init_position(&map);
+  
       mlx_hook(data.window, 17, 0, &close_window, &data);
       mlx_key_hook(data.window, &key_press, &data);
       mlx_loop(data.mlx);

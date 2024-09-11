@@ -6,7 +6,7 @@
 /*   By: ferda-si <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:23:40 by ferda-si          #+#    #+#             */
-/*   Updated: 2024/06/07 13:23:47 by ferda-si         ###   ########.fr       */
+/*   Updated: 2024/09/09 18:32:02 by ferda-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -80,5 +80,3 @@ char	*get_next_line(int fd)
 	backup = extract(line);
 	return (line);
 }
-
-
