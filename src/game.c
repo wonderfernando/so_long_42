@@ -6,9 +6,10 @@
 /*   By: ferda-si <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:53:17 by ferda-si          #+#    #+#             */
-/*   Updated: 2024/09/09 18:34:38 by ferda-si         ###   ########.fr       */
+/*   Updated: 2024/09/13 17:54:26 by ferda-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "so_long.h"
 
 void	check_win(struct t_data *data, int key)
@@ -51,7 +52,6 @@ void	render_map(struct t_data *data)
 	y = -1;
 	pos_x = 0;
 	pos_y = 0;
-	
 	mlx_clear_window(data->mlx, data->window);
 	while (data->map->map[++y] != NULL)
 	{
@@ -85,7 +85,7 @@ void	init_values(struct t_data *data, char **av, struct t_map *map)
 	data->jogador_pos_y = 0;
 }
 
-void	init_map(const char *filename, struct t_map *map, struct t_data *data)
+int	count_lines(const char *filename)
 {
 	char	*line;
 	int		fd_map;
@@ -101,10 +101,17 @@ void	init_map(const char *filename, struct t_map *map, struct t_data *data)
 		line = get_next_line(fd_map);
 	}
 	close(fd_map);
-	map->map = malloc(sizeof(char *) * (lines + 1));
-	data->heigth = lines * 80;
-	fd_map = open(filename, O_RDONLY);
+	return (lines);
+}
+
+void	full_map(const char *filename, struct t_map *map, struct t_data *data)
+{
+	char	*line;
+	int		lines;
+	int		fd_map;
+
 	lines = 0;
+	fd_map = open(filename, O_RDONLY);
 	line = get_next_line(fd_map);
 	while (line != NULL)
 	{
@@ -115,7 +122,7 @@ void	init_map(const char *filename, struct t_map *map, struct t_data *data)
 			map->pos_x = ft_strchr(line, 'P') - line;
 			data->jogador_pos_x = map->pos_x * 80;
 			data->jogador_pos_y = lines * 80;
-		}	
+		}
 		lines++;
 		free(line);
 		line = get_next_line(fd_map);
@@ -123,6 +130,18 @@ void	init_map(const char *filename, struct t_map *map, struct t_data *data)
 	free(line);
 	close(fd_map);
 	map->map[lines] = NULL;
+}
+
+void	init_map(const char *filename, struct t_map *map, struct t_data *data)
+{
+	char	*line;
+	int		fd_map;
+	int		lines;
+
+	lines = count_lines(filename);
+	map->map = malloc(sizeof(char *) * (lines + 1));
+	data->heigth = lines * 80;
+	full_map(filename, map, data);
 	data->width = (ft_strlen(map->map[0]) - 1) * 80;
 	data->map = map;
 }
